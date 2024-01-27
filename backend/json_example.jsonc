@@ -1,0 +1,13 @@
+{
+    "sensor_data": {
+        "bpm": 120,
+        "weight": 120,
+        "exercise_hours": 120
+    },
+    "health_concerns": {
+        "1/2/23": "tummy hurted",
+        "2/2/23": "tummy hurted"
+    }
+    // "meals": {
+    // }
+}
