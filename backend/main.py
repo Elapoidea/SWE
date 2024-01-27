@@ -10,8 +10,8 @@ from starlette.requests import empty_receive
 import uvicorn
 from typing import List
 import os
-
-from parse_health_json import HealthData, SensorData, HealthConcern
+from dataclasses import dataclass
+from datetime import date, datetime
 
 ##### Underlying JSON data helper functions
 
@@ -42,13 +42,36 @@ def read_db():
 
     # Load json file
     json_file = open(DB_FILE_NAME, 'r')
-    healthdata = HealthData.make_from_json(json.load(json_file))
+    healthdata = json.load(json_file)
     json_file.close()
     return healthdata
 
 def write_json():
     with open(DB_FILE_NAME, 'w') as f:
         json.dump(HEALTH_DATA, f)
+
+def date_str_to_date_obj(date_str: str) -> date:
+    return datetime.strptime(date_str, "%d/%m/%y")
+
+def get_db_sensor_data() -> dict:
+    return HEALTH_DATA["sensor_datas"]
+
+def get_db_health_concerns() -> dict:
+    return HEALTH_DATA["health_concerns"]
+
+# helper methods for writing data
+def add_db_concern(date_str: str, concern: str):
+    date = date_str_to_date_obj(date_str)
+    HEALTH_DATA["health_concerns"][date] = concern
+    write_json()
+    return 0
+
+def remove_db_concern(date_str: str):
+    date = date_str_to_date_obj(date_str)
+    HEALTH_DATA["health_concerns"].remove(date)
+    write_json()
+    return 0
+
 
 ##### FastAPI server setup
 origins = [
@@ -72,29 +95,26 @@ async def root():
 
 @app.get("/get_all_sensor_data")
 async def get_all_sensor_data():
-    data_json_str = json.dumps(HEALTH_DATA.sensor_datas)
-    return data_json_str
+    return get_db_sensor_data()
 
 @app.get("/get_all_health_concerns")
 async def get_all_health_concerns():
-    data_json_str = json.dumps(HEALTH_DATA.health_concerns)
-    return data_json_str
+    return get_db_health_concerns()
 
-@app.get("/summarize/")
-async def get_summary(date_range: DateTime):
+# TODO: WIP add 2 paramas (start/end date)
+@app.get("/summarize")
+async def get_summary():
     # TODO: merge code here
-    summary = "TODO: get via API"
+    summary = "TODO: get via openai API"
     return  {
         "summary": summary
     }
 
 @app.get("/removeNote/{date}")
-async def remove_note(date: DateTime):
-    status = HealthData.remove_note(date)
+async def remove_note(date_str: str):
+    status = remove_db_concern(date_str)
     return { "status": status }
 
 if __name__ == '__main__':
     HEALTH_DATA = read_db()
     uvicorn.run(app, port=8000, host='0.0.0.0')
-    print("test")
-
