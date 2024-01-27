@@ -1,18 +1,1 @@
-{
-    "sensor_datas": {
-        "10/12/23": {
-            "bpm": 120,
-            "weight": 120,
-            "exercise_hours": 120
-        },
-        "12/12/23": {
-            "bpm": 121,
-            "weight": 121,
-            "exercise_hours": 122
-        }
-    },
-    "health_concerns": {
-        "1/2/23": "tummy hurted",
-        "2/2/23": "tummy hurted"
-    }
-}
+{"sensor_datas": {"10/12/23": {"bpm": 120, "weight": 120, "exercise_hours": 120}, "12/12/23": {"bpm": 121, "weight": 121, "exercise_hours": 122}}, "health_concerns": {"2/2/23": "tummy hurted", "01/01/2022": "tummyhurtedmore"}}

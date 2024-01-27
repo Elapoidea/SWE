@@ -15,13 +15,6 @@ from datetime import date, datetime
 
 ##### Underlying JSON data helper functions
 
-DB_FILE_NAME = 'data.json'
-
-DEFAULT_FILE={
-        "sensor_datas" : [],
-        "health_concerns" : []
-    }
-
 def reset_json_db():
     # Reset JSON file to default
     json_file = open(DB_FILE_NAME, 'w')
@@ -61,14 +54,22 @@ def get_db_health_concerns() -> dict:
 
 # helper methods for writing data
 def add_db_concern(date_str: str, concern: str):
-    date = date_str_to_date_obj(date_str)
-    HEALTH_DATA["health_concerns"][date] = concern
+    HEALTH_DATA["health_concerns"][date_str] = concern
     write_json()
     return 0
 
 def remove_db_concern(date_str: str):
-    date = date_str_to_date_obj(date_str)
-    HEALTH_DATA["health_concerns"].remove(date)
+    del HEALTH_DATA["health_concerns"][date_str]
+    write_json()
+    return 0
+
+def add_db_sensor_data(date_str: str, data: dict):
+    HEALTH_DATA["sensor_datas"][date_str] = data
+    write_json()
+    return 0
+
+def remove_db_sensor_data(date_str: str):
+    del HEALTH_DATA["sensor_datas"][date_str]
     write_json()
     return 0
 
@@ -110,11 +111,23 @@ async def get_summary():
         "summary": summary
     }
 
-@app.get("/removeNote/{date}")
-async def remove_note(date_str: str):
+@app.get("/add_concern")
+async def add_concern(date_str: str, concern: str):
+    date_str = date_str.replace("-", "/")
+    status = add_db_concern(date_str, concern)
+    return { "status": status }
+
+@app.post("/remove_concern/{date_str}")
+async def remove_concern(date_str: str):
+    date_str = date_str.replace("-", "/")
     status = remove_db_concern(date_str)
     return { "status": status }
 
-if __name__ == '__main__':
-    HEALTH_DATA = read_db()
-    uvicorn.run(app, port=8000, host='0.0.0.0')
+DB_FILE_NAME = 'data.json'
+
+DEFAULT_FILE={
+        "sensor_datas" : [],
+        "health_concerns" : []
+    }
+
+HEALTH_DATA = read_db()
