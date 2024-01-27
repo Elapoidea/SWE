@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 
-from click import DateTime
+from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import json
-import requests
-import openai
-from starlette.requests import empty_receive
 import uvicorn
 from typing import List
 import os
-from dataclasses import dataclass
 from datetime import date, datetime
 
 ##### Underlying JSON data helper functions
@@ -122,6 +118,8 @@ async def remove_concern(date_str: str):
     date_str = date_str.replace("-", "/")
     status = remove_db_concern(date_str)
     return { "status": status }
+
+app.mount("/", StaticFiles(directory="../frontend"), name="static")
 
 DB_FILE_NAME = 'data.json'
 
