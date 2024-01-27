@@ -369,8 +369,6 @@ function load_data(c) {
                 let weeek = +Math.floor(daay / 7);
 
                 calendar.childNodes[weeek + 2].children[daay % 7].firstElementChild.style.backgroundColor = `hsl(${(c) * 360/(3)} 30% 50%)`;
-                console.log(calendar.childNodes[weeek + 2].children[daay % 7].firstElementChild);
-                calendar.childNodes[weeek + 2].children[daay % 7].firstElementChild.classList.add('test');
             }
 
             //  new_row.firstElementChild.firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
@@ -380,9 +378,12 @@ function load_data(c) {
 
 function fix_buttons() {
     for (i = 0; i < 3; i++) {
-        
-        console.log(document.getElementById('percent_to_cards').firstElementChild.children[i + 1].children[1].firstChild);
-        document.getElementById('percent_to_cards').firstElementChild.children[i + 1].children[1].firstChild.onClick = load_data(i);
+        document.getElementById('percent_to_cards').firstElementChild.children[i + 1].children[1].firstChild.id = i;
+
+        document.getElementById(i).addEventListener('click', function(e) {
+            load_data(e.target.id);
+          });
+          
     }
 }
 
