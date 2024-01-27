@@ -496,8 +496,8 @@ function add_rows(rows) {
     for (i = 0; i < rows; i++) {
         let new_row = input_row.cloneNode(true);
 
-        new_row.firstElementChild.firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
-        new_row.children[1].firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
+        new_row.firstElementChild.firstElementChild.style['background-color'] = `hsl(${(i + 1) * 360 / (rows + 1)} 30% 50%)`;
+        new_row.children[1].firstElementChild.style['background-color'] = `hsl(${(i + 1) * 360 / (rows + 1)} 30% 50%)`;
 
         table.firstElementChild.appendChild(new_row);
     }
@@ -514,7 +514,7 @@ function read_table() {
         if (!(parsed_row.draws && parsed_row.success)) {
             continue;
         }
-        
+
         inputs.push(parsed_row);
     }
 
@@ -530,7 +530,7 @@ function calculate() {
 
     for (const datum of data) {
         answer = parseFloat(root(at_least_one, 32, datum.draws, datum.success).toFixed(1));
-            
+
         overall_success *= datum.success / 100;
         total_cards += answer;
 
@@ -553,7 +553,7 @@ function create_graph() {
 
     for (i = 0; i < 7; i++) {
         ctx.fillStyle = '#4C566A';
-        ctx.fillRect((i + 1) * graph.width / 8, graph.height / 22, 1, graph.height * 20/22);
+        ctx.fillRect((i + 1) * graph.width / 8, graph.height / 22, 1, graph.height * 20 / 22);
 
         ctx.fillStyle = '#D8DEE9';
         ctx.fillText(weekday_names[i], (i + 1) * graph.width / 8, graph.height - graph.height / 22 + 6)
@@ -564,10 +564,10 @@ function create_graph() {
 
     for (i = 0; i < 21; i++) {
         ctx.fillStyle = '#4C566A';
-        ctx.fillRect(graph.width / 8, (i + 1) * graph.height / 22, graph.width * 6/8, 1);
+        ctx.fillRect(graph.width / 8, (i + 1) * graph.height / 22, graph.width * 6 / 8, 1);
 
         ctx.fillStyle = '#D8DEE9';
-        ctx.fillText(100 - i * 5, graph.width * 7/8 + 6, (i + 1) * graph.height / 22)
+        ctx.fillText(100 - i * 5, graph.width * 7 / 8 + 6, (i + 1) * graph.height / 22)
     }
 
     ctx.textAlign = 'center'
@@ -580,36 +580,36 @@ function create_graph() {
 
 function draw_last_week() {
     ctx.lineWidth = 3;
-    
+
     for (const datum of data) {
-        ctx.strokeStyle = `hsl(${(datum.id) * 360/10} 30% 50%)`;
+        ctx.strokeStyle = `hsl(${(datum.id) * 360 / 10} 30% 50%)`;
         ctx.moveTo(-graph.width / 2, graph.height);
-        ctx.beginPath();    
-       
+        ctx.beginPath();
+
         for (let i = 0; i < 21; i++) {
             let x = (i + 1) * graph.width / 22;
-            let y = graph.height * 21/22 - at_least_one(datum.cards, i + 7) * graph.height * 20/22
+            let y = graph.height * 21 / 22 - at_least_one(datum.cards, i + 7) * graph.height * 20 / 22
 
             ctx.lineTo(x, y)
         }
-        
+
         ctx.stroke();
     }
 
     ctx.font = '15px Arial';
 
     for (const datum of data) {
-        ctx.fillStyle = `hsl(${(datum.id) * 360/10} 30% 50%)`;   
-       
+        ctx.fillStyle = `hsl(${(datum.id) * 360 / 10} 30% 50%)`;
+
         let x = (datum.draws - 7 + 1) * graph.width / 22;
-        let y =  graph.height * 21/22 - at_least_one(datum.cards, datum.draws) * graph.height * 20/22;
+        let y = graph.height * 21 / 22 - at_least_one(datum.cards, datum.draws) * graph.height * 20 / 22;
 
         ctx.beginPath();
         ctx.arc(x + 1, y, 5, 0, 2 * Math.PI);
         ctx.fill();
         ctx.fillText(datum.category, x, y - 12);
     }
-    
+
 }
 
 function set_categories() {
@@ -634,7 +634,7 @@ function first_day(year, month) {
 function add_week() {
     calendar.appendChild(document.createElement('tr'));
 
-    for (j=0; j<7; j++) {
+    for (j = 0; j < 7; j++) {
         let cell = document.createElement('th');
         let button = document.createElement('button');
 
@@ -677,7 +677,7 @@ function setup() {
 
     add_week();
 
-    for (i=1; i<=40; i++) {
+    for (i = 1; i <= 40; i++) {
         day += 1;
 
         if (day >= 7) {
@@ -687,12 +687,12 @@ function setup() {
             add_week();
         }
 
-        if (!(week == 0 && day < day_1 - 1  ) && !(i >= days_in_month(dyear, dmonth + 1) + day_1 - 1)) {
+        if (!(week == 0 && day < day_1 - 1) && !(i >= days_in_month(dyear, dmonth + 1) + day_1 - 1)) {
             calendar.children[week + 1].children[day].firstElementChild.innerHTML = idate;
 
             idate += 1;
         }
-        
+
         if (i == date.getDate()) {
             calendar.children[week + 1].children[day].firstElementChild.classList.add('today');
         }
@@ -726,19 +726,47 @@ function month_down() {
     setup()
 }
 
-let  cat = [
+let cat = [
     'bpm',
     'weight',
     'exercise_hours'
 ];
 
 function load_data(c) {
+    //  curl --header "Content-Type: application/json" --request GET 'api.arianb.me:8000/add_concern?date_str=01/01/2022&concern=tummyhurtedmorejihnuyyuguy'
+    let url = "http://api.arianb.me:8000/get_all_sensor_data";
+    let options = {
+        method: 'GET',
+        headers: {
+            'Content-Type':
+                'application/json;'
+        },
+    };
+    let fetchRes = fetch(url, options);
+
+    let d = "";
+    fetchRes.then(res =>
+        res.json()).then(d => { console.log(d) });
+
+
+    // // API for get requests
+    // let fetchRes = fetch(
+    //     "https://jsonplaceholder.typicode.com/todos/1");
+
+    // // FetchRes is the promise to resolve
+    // // it by using.then() method
+    // fetchRes.then(res =>
+    //     res.json()).then(d => {
+    //         console.log(d)
+    //     })
+
+
     let [dyear, dmonth] = shifted_month_year(year, month);
     let day_12 = first_day(dyear, dmonth);
 
 
-    for (let [date_a, data_b] of Object.entries(abcdef["sensor_datas"])) {
-        if (data_b[cat[c]] ) {
+    for (let [date_a, data_b] of Object.entries(d["sensor_datas"])) {
+        if (data_b[cat[c]]) {
             let yeear = +date_a.slice(6, 8);
             let moonth = +date_a.slice(3, 5);
 
@@ -746,7 +774,7 @@ function load_data(c) {
                 let daay = +date_a.slice(0, 2) + day_12 - 2;
                 let weeek = +Math.floor(daay / 7);
 
-                calendar.childNodes[weeek + 2].children[daay % 7].firstElementChild.style.backgroundColor = `hsl(${(c) * 360/(3)} 30% 50%)`;
+                calendar.childNodes[weeek + 2].children[daay % 7].firstElementChild.style.backgroundColor = `hsl(${(c) * 360 / (3)} 30% 50%)`;
             }
 
             //  new_row.firstElementChild.firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
@@ -758,10 +786,10 @@ function fix_buttons() {
     for (i = 0; i < 3; i++) {
         document.getElementById('percent_to_cards').firstElementChild.children[i + 1].children[1].firstChild.id = i;
 
-        document.getElementById(i).addEventListener('click', function(e) {
+        document.getElementById(i).addEventListener('click', function (e) {
             load_data(e.target.id);
-          });
-          
+        });
+
     }
 }
 
@@ -778,7 +806,7 @@ for (i = 0; i < table.childNodes[1].childElementCount + 2; i++) {
     }
 }
 
-set_categories(); 
+set_categories();
 create_graph();
 
 

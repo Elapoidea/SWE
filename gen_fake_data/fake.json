@@ -1,0 +1,69 @@
+{
+    "sensor_datas": {
+        "01/12/23": {
+            "bpm": 70,
+            "weight": 150,
+            "exercise_minutes": 90
+        },
+        "08/12/23": {
+            "bpm": 78,
+            "weight": 156,
+            "exercise_minutes": 98
+        },
+        "15/12/23": {
+            "bpm": 85,
+            "weight": 163,
+            "exercise_minutes": 105
+        },
+        "22/12/23": {
+            "bpm": 92,
+            "weight": 170,
+            "exercise_minutes": 112
+        },
+        "29/12/23": {
+            "bpm": 97,
+            "weight": 175,
+            "exercise_minutes": 117
+        },
+        "05/01/24": {
+            "bpm": 104,
+            "weight": 182,
+            "exercise_minutes": 124
+        },
+        "12/01/24": {
+            "bpm": 113,
+            "weight": 191,
+            "exercise_minutes": 133
+        },
+        "19/01/24": {
+            "bpm": 122,
+            "weight": 200,
+            "exercise_minutes": 142
+        },
+        "26/01/24": {
+            "bpm": 131,
+            "weight": 209,
+            "exercise_minutes": 151
+        },
+        "02/02/24": {
+            "bpm": 140,
+            "weight": 218,
+            "exercise_minutes": 160
+        },
+        "09/02/24": {
+            "bpm": 149,
+            "weight": 227,
+            "exercise_minutes": 169
+        },
+        "16/02/24": {
+            "bpm": 158,
+            "weight": 236,
+            "exercise_minutes": 178
+        },
+        "23/02/24": {
+            "bpm": 167,
+            "weight": 245,
+            "exercise_minutes": 187
+        }
+    }
+}
