@@ -5,7 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import json
 import requests
 import openai
-import psycopg2
 from starlette.requests import empty_receive
 import uvicorn
 import os
