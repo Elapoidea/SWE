@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  web:
+    image: nginx
+    volumes:
+    - ./conf:/etc/nginx/
+    ports:
+    - "8080:80"
+    environment:
+    - NGINX_HOST=hackathon.arianb.me
+    - NGINX_PORT=80
