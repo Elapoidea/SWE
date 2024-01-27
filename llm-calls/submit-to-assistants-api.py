@@ -29,7 +29,7 @@ def get_response(user_input):
             thread_id=thread.id,
             run_id=run.id
         )
-        time.sleep(1)
+        time.sleep(0.5)
 
     thread_messages = client.beta.threads.messages.list(thread.id)
 
