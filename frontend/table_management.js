@@ -9,6 +9,7 @@ function add_rows(rows) {
         let new_row = input_row.cloneNode(true);
 
         new_row.firstElementChild.firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
+        new_row.children[1].firstElementChild.style['background-color'] = `hsl(${(i+1) * 360/(rows+1)} 30% 50%)`;
 
         table.firstElementChild.appendChild(new_row);
     }
@@ -207,7 +208,7 @@ function draw_area() {
     // ctx.fillText(text, constricted_x + offset, constricted_y);
 }
 
-add_rows(9);
+add_rows(7);
 
 let row_list = [];
 

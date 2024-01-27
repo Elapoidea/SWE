@@ -16,7 +16,7 @@
             table {
                 table-layout: fixed;
                 background: #3B4252;
-                width: 600px;
+                width: 300px;
             }
 
             td {
@@ -56,6 +56,11 @@
                 top: 20px;
             }
 
+            table#calendar {
+                position: relative;
+                top: 20px;
+            }
+
             table#header2 {
                 position: absolute;
                 top: 8px;
@@ -73,30 +78,42 @@
                 top: 60px;
                 left: 618px;
             }
+
+            button.day {
+                width: 30px;
+                height: 30px;
+                background-color: #434C5E;
+                color: #ECEFF4;
+            }
+
+            button {
+                border: none;
+            }
+
+            button.today {
+                font: bold 13px Arial;
+            }
+
         </style>
     </head>
     <body>
         <table id="header1">
             <tr>
-                <th>Given the probability that a certain type of card will appear by a given turn, how many of those cards should be in your deck?</th>
+                <th>What information would you like to track?</th>
             </tr>
         </table>
 
         <table id="percent_to_cards">
             <tr>
-                <th>Strategic Category</th>
-                <th>Turns</th>
-                <th>% Likelihood of at Least 1 Card Being Drawn by the Given Turn</th>
-                <th>Cards Needed in Deck</th>
+                <th>Category</th>
+                <th>Calendar</th>
             </tr>
             <tr id="input_row" oninput="calculate()">
                 <td><input style="background-color:rgb(166,89,89)"></input></td>
-                <td><input type="number"></input></td>
-                <td><input type="number"></input></td>
-                <td><p></p></td>
+                <td><button style="background-color:rgb(166,89,89)" type="button">📅</button></td>
             </tr>
         </table>
-
+<!-- 
         <table id="totals">
             <tr>
                 <th>% Likelihood of one card from each category being drawn at the proper time</th>
@@ -106,7 +123,7 @@
                 <td><p id="overall_success"></p></td>
                 <td><p id="total_cards"></p></td>
             </tr>
-        </table>
+        </table> -->
 
         <table id="header2">
             <tr>
@@ -114,8 +131,26 @@
             </tr>
         </table>
 
+        <table id="calendar">
+            <tr>
+                <th colspan="5">Test</th>
+                <td><button style="background-color:rgb(166,89,89)" type="button" onclick="month_down()"><</button></td>
+                <td><button style="background-color:rgb(166,89,89)" type="button" onclick="month_up()">></button></td>
+            </tr>
+            <tr>
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+            </tr>
+        </table>
+
         <canvas id="graph" width="800" height="800"></canvas>
 
         <script type="text/javascript" src="table_management.js"></script>
+        <script type="text/javascript" src="calendar.js"></script>
     </body>
 </html>
