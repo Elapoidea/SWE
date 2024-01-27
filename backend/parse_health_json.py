@@ -5,6 +5,7 @@ import json
 
 @dataclass
 class SensorData:
+    date: datetime
     bpm: int
     weight: int
     exercise_hours: int
@@ -29,9 +30,9 @@ class HealthData:
 
             sensor_datas = []
             for date_str, datas in data["sensor_datas"].items():
-                sensor_date = datetime.strptime(date_str, "%d/%m/%y").date()
+                sensor_date = datetime.strptime(date_str, "%d/%m/%y")
 
-                s = SensorData(*datas.values())
+                s = SensorData(sensor_date, *datas.values())
                 sensor_datas.append(s)
 
             health_concerns = []
